@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StyleZone Streetwear</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <button class="icon-btn mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+
+        <div class="brand" onclick="showPage('home')">
+          <span class="brand-mark">SZ</span>
+          <span>Style<span>Zone</span></span>
+        </div>
+
+        <nav class="nav-menu" id="navMenu">
+          <a onclick="showPage('home')">Home</a>
+          <a onclick="showPage('products')">Shop</a>
+          <a onclick="filterByStyle('Classic')">Classic</a>
+          <a onclick="filterByStyle('Casual')">Casual</a>
+          <a onclick="filterByStyle('Minimalism')">Minimalism</a>
+          <a onclick="showPage('auth')">Account</a>
+          <a href="./ThucHanh/tonghoplab.html">Lab thực hành</a>
+        </nav>
+
+        <div class="topbar-actions">
+          <button class="search-pill" onclick="showPage('products')">Search gear</button>
+          <button class="cart-pill" onclick="showPage('cart')">
+            Cart <span id="cartCount">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- HOME -->
+      <section id="homePage" class="page active">
+        <div class="container">
+          <section class="hero-grid">
+            <div class="hero-copy">
+              <p class="eyebrow">Bộ sưu tập quần áo phong cách</p>
+              <h1>Nâng cấp thời trang của bạn</h1>
+              <p class="hero-text">
+                Bộ sưu tập quần áo dành cho người đơn giản, cổ điển thanh lịch, thể thao và phong cách bình thường năng động.
+              </p>
+
+              <div class="hero-cta">
+                <button class="btn btn-primary" onclick="showPage('products')">Shop collection</button>
+                <button class="btn btn-ghost" onclick="filterByStyle('Classic')">Vào Classic</button>
+              </div>
+
+              <div class="hero-stats">
+                <div>
+                  <strong>80+</strong>
+                  <span>Sản phẩm</span>
+                </div>
+                <div>
+                  <strong>4.9</strong>
+                  <span>Đánh giá</span>
+                </div>
+                <div>
+                  <strong>24h</strong>
+                  <span>Giao nhanh</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-product">
+              <div class="hero-product-card">
+                <span class="floating-label">Best seller</span>
+                <div class="big-product-icon"><img src="anh/4.webp" alt=""></div>
+                <h3>Áo thun trơn basic</h3>
+                <p>Áo thun đơn giản phù hợp cho nhiều nơi công cộng.</p>
+                <div class="hero-price-row">
+                  <strong>150.000đ</strong>
+                  <button onclick="addToCart(3)">Add</button>
+                </div>
+              </div>
+
+              <div class="mini-drop-card">
+                <span>New Drop</span>
+                <strong>Style 2026</strong>
+              </div>
+            </div>
+          </section>
+
+<section class="section-head">
+            <div>
+              <p class="eyebrow dark">Shop by style</p>
+              <h2>Chọn theo phong cách</h2>
+            </div>
+            <button class="text-btn" onclick="showPage('products')">Xem tất cả →</button>
+          </section>
+
+          <section class="style-grid">
+            <article class="style-card classic" onclick="filterByStyle('Classic')">
+              <h3>Classic</h3>
+              <p>Thanh lịch, cổ điển và vượt thời gian</p>
+            </article>
+            <article class="style-card casual" onclick="filterByStyle('Casual')">
+              <h3>Casual</h3>
+              <p>Thoải mái, năng động cho ngày thường</p>
+            </article>
+            <article class="style-card minimalism" onclick="filterByStyle('Minimalism')">
+              <h3>Minimalism</h3>
+              <p>Tối giản, tinh tế, dễ dàng phối đồ</p>
+            </article>
+            <article class="style-card sport" onclick="filterByStyle('Sport')">
+              <h3>Sport</h3>
+              <p>Đậm chất thể thao và khỏe khoắn</p>
+            </article>
+          </section>
+
+          <section class="section-head">
+            <div>
+              <p class="eyebrow dark">New arrival</p>
+              <h2>Sản phẩm mới</h2>
+            </div>
+          </section>
+
+          <section id="homeProducts" class="product-row"></section>
+        </div>
+      </section>
+
+      <!-- PRODUCTS -->
+      <section id="productsPage" class="page">
+        <div class="container">
+          <section class="shop-header">
+            <div>
+              <p class="eyebrow dark">StyleZone shop</p>
+              <h1>Danh sách sản phẩm</h1>
+              <p>Tìm kiếm, lọc theo phong cách, danh mục, giới tính và sắp xếp theo giá.</p>
+            </div>
+          </section>
+
+          <section class="shop-layout">
+            <aside class="filter-panel">
+              <div class="filter-title">
+                <h3>Bộ lọc</h3>
+                <button onclick="resetFilters()">Reset</button>
+              </div>
+
+              <label>Tìm kiếm</label>
+              <input id="searchInput" type="text" placeholder="Nhập tên sản phẩm..." oninput="renderProducts()" />
+
+              <label>Phong cách</label>
+              <select id="styleFilter" onchange="renderProducts()">
+                <option value="Tất cả">Tất cả</option>
+                <option value="Classic">Classic</option>
+                <option value="Casual">Casual</option>
+                <option value="Minimalism">Minimalism</option>
+                <option value="Sport">Sport</option>
+              </select>
+
+              <label>Danh mục</label>
+              <select id="categoryFilter" onchange="renderProducts()">
+                <option value="Tất cả">Tất cả</option>
+                <option value="Áo">Áo</option>
+                <option value="Quần">Quần</option>
+                <option value="Giày">Giày</option>
+                <option value="Phụ kiện">Phụ kiện</option>
+              </select>
+
+              <label>Giới tính</label>
+              <select id="genderFilter" onchange="renderProducts()">
+                <option value="Tất cả">Tất cả</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Unisex">Unisex</option>
+              </select>
+
+              <label>Sắp xếp</label>
+              <select id="sortFilter" onchange="renderProducts()">
+                <option value="default">Mặc định</option>
+                <option value="priceAsc">Giá thấp đến cao</option>
+                <option value="priceDesc">Giá cao đến thấp</option>
+                <option value="nameAsc">Tên A - Z</option>
+              </select>
+            </aside>
+
+            <div>
+              <div class="shop-toolbar">
+                <p id="resultCount">0 sản phẩm</p>
+                <button class="btn btn-dark" onclick="showPage('cart')">Xem giỏ hàng</button>
+              </div>
+              <section id="productList" class="product-grid"></section>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- DETAIL -->
+      <section id="detailPage" class="page">
+        <div class="container">
+          <button class="back-btn" onclick="showPage('products')">← Quay lại shop</button>
+          <section id="productDetail" class="detail-layout"></section>
+        </div>
+      </section>
+
+      <!-- CART -->
+      <section id="cartPage" class="page">
+        <div class="container">
+          <section class="shop-header compact">
+            <div>
+              <p class="eyebrow dark">Shopping cart</p>
+              <h1>Giỏ hàng giả lập</h1>
+              <p>Dữ liệu giỏ hàng được lưu bằng LocalStorage.</p>
+            </div>
+          </section>
+
+          <section class="cart-layout">
+            <div class="cart-box">
+              <h2>Sản phẩm trong giỏ</h2>
+              <div id="cartList"></div>
+            </div>
+
+            <aside class="summary-box">
+              <h2>Tổng đơn hàng</h2>
+              <div class="summary-line">
+                <span>Tạm tính</span>
+                <strong id="subtotalText">0đ</strong>
+              </div>
+              <div class="summary-line">
+                <span>Phí giao hàng</span>
+                <strong id="shippingText">0đ</strong>
+              </div>
+              <div class="summary-line">
+                <span>Giảm giá</span>
+                <strong id="discountText">0đ</strong>
+              </div>
+              <div class="summary-line total">
+                <span>Tổng cộng</span>
+                <strong id="totalText">0đ</strong>
+              </div>
+              <button class="btn btn-primary full" onclick="goCheckout()">Thanh toán</button>
+            </aside>
+          </section>
+        </div>
+      </section>
+
+      <!-- AUTH -->
+      <section id="authPage" class="page">
+        <div class="container">
+          <section class="auth-layout">
+            <div class="auth-banner">
+              <p class="eyebrow">Member zone</p>
+              <h1>JOIN THE STYLEZONE CLUB</h1>
+            </div>
+
+            <div class="auth-forms">
+              <form class="form-card" onsubmit="loginSubmit(event)">
+                <h2>Đăng nhập</h2>
+                <label>Email</label>
+                <input id="loginEmail" type="email" required placeholder="email@gmail.com" />
+                <label>Mật khẩu</label>
+                <input id="loginPassword" type="password" required minlength="6" placeholder="Tối thiểu 6 ký tự" />
+                <button class="btn btn-primary full">Đăng nhập</button>
+              </form>
+
+              <form class="form-card" onsubmit="registerSubmit(event)">
+                <h2>Đăng ký</h2>
+                <label>Họ tên</label>
+                <input id="registerName" type="text" required placeholder="Nhập họ tên" />
+                <label>Email</label>
+                <input id="registerEmail" type="email" required placeholder="email@gmail.com" />
+                <label>Mật khẩu</label>
+                <input id="registerPassword" type="password" required minlength="6" placeholder="Tối thiểu 6 ký tự" />
+                <button class="btn btn-dark full">Tạo tài khoản</button>
+              </form>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <!-- CHECKOUT -->
+      <section id="checkoutPage" class="page">
+        <div class="container">
+          <section class="shop-header compact">
+            <div>
+              <p class="eyebrow dark">Checkout</p>
+              <h1>Thanh toán</h1>
+              <p>Nhập thông tin giao hàng và xác nhận đơn mua giả lập.</p>
+            </div>
+          </section>
+
+          <section class="checkout-layout">
+            <form class="checkout-form" onsubmit="checkoutSubmit(event)">
+              <h2>Thông tin nhận hàng</h2>
+
+              <div class="form-row">
+                <div>
+                  <label>Họ và tên</label>
+                  <input id="customerName" type="text" required placeholder="Nguyễn Văn A" />
+                </div>
+                <div>
+                  <label>Số điện thoại</label>
+                  <input id="customerPhone" type="tel" required pattern="[0-9]{9,11}" placeholder="0901234567" />
+                </div>
+              </div>
+
+              <label>Email</label>
+              <input id="customerEmail" type="email" required placeholder="email@gmail.com" />
+
+              <label>Địa chỉ</label>
+              <textarea id="customerAddress" required rows="4" placeholder="Nhập địa chỉ nhận hàng"></textarea>
+
+              <div class="form-row">
+                <div>
+                  <label>Thanh toán</label>
+                  <select id="paymentMethod" required>
+                    <option value="COD">Thanh toán khi nhận hàng</option>
+                    <option value="Bank">Chuyển khoản ngân hàng</option>
+                    <option value="Momo">Ví MoMo</option>
+                  </select>
+                </div>
+                <div>
+                  <label>Ghi chú</label>
+                  <input id="orderNote" type="text" placeholder="Giao giờ hành chính" />
+                </div>
+              </div>
+
+              <button class="btn btn-primary full">Đặt hàng</button>
+            </form>
+
+            <aside class="summary-box checkout-summary">
+              <h2>Đơn hàng</h2>
+              <div id="checkoutItems"></div>
+              <div class="summary-line total">
+                <span>Tổng cộng</span>
+                <strong id="checkoutTotal">0đ</strong>
+              </div>
+            </aside>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="brand footer-brand">
+            <span class="brand-mark">SZ</span>
+            <span>Style<span>Zone</span></span>
+          </div>
+        </div>
+        <div>
+          <h3>Shop</h3>
+          <a onclick="filterByStyle('Classic')">Classic</a>
+          <a onclick="filterByStyle('Casual')">Casual</a>
+          <a onclick="filterByStyle('Minimalism')">Minimalism</a>
+        </div>
+        <div>
+          <h3>Support</h3>
+          <a>Chính sách đổi trả</a>
+          <a>Hướng dẫn mua hàng</a>
+          <a>Liên hệ</a>
+        </div>
+        <div>
+          <h3>Contact</h3>
+          <p>Phan Gia Mẫn</p>
+          <p>DH52301167</p>
+          <p>D23_TH07</p>
+        </div>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
